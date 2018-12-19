@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.zhipeng.shell</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>050FD233-1BAF-4026-A6AB-57442BD71B2C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E93C9EB9-5581-4571-9054-597C8C23D616</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>EFD34DC2-0ED3-4CB9-8CCC-A832BFC1F5B4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EFD34DC2-0ED3-4CB9-8CCC-A832BFC1F5B4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>050FD233-1BAF-4026-A6AB-57442BD71B2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>zhipeng</string>
+	<key>description</key>
+	<string>run any shell</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>shells</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>E93C9EB9-5581-4571-9054-597C8C23D616</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>sh</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>wait ...</string>
+				<key>script</key>
+				<string>import os
+import sys
+import json
+import subprocess
+FNULL = open(os.devnull, 'w')
+
+cmds = sys.argv[1:]
+#exit()
+if not cmds:
+	exit()
+result_list = []
+result_list.append( {"uid": 0, "arg": "run: "+ " ".join(cmds), "title": " ".join(cmds), "subtitle": "Enter Run Command"} )
+
+print json.dumps( {"items":result_list})
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>test.sh</string>
+				<key>subtext</key>
+				<string>like: ls -al ~</string>
+				<key>title</key>
+				<string>run any shell</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>50B0CD10-4D52-4898-9C05-DD3A34A829C3</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>run</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>wait ...</string>
+				<key>script</key>
+				<string>import os
+import sys
+import json
+import subprocess
+FNULL = open(os.devnull, 'w')
+
+cmds = " ".join(sys.argv[1:]).replace("run:", "").strip()
+#print json.dumps( {"items":[{"uid": 1, "title": "will run: " + cmds},]})
+#exit()
+if not cmds:
+	exit()
+sub=subprocess.Popen(cmds, shell=True, stdout=subprocess.PIPE, stderr=FNULL)
+result_list = []
+i = 0
+for j in sub.stdout:
+	j = j.strip()
+	if not j:
+		continue
+	i += 1
+	result_list.append( {"uid": i, "arg": j, "title": j, "subtitle": ""} )
+	#result_list.append( {"uid": i, "arg": j, "subtitle": j, "title": ""} )
+
+print json.dumps( {"items":result_list})</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>test.sh</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>run any shell ..</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>050FD233-1BAF-4026-A6AB-57442BD71B2C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^run</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>EFD34DC2-0ED3-4CB9-8CCC-A832BFC1F5B4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>run any shell on alfred.
+example:
+sh ls -al
+sh curl -I google.com
+
+author: zhipeng
+website: https://github.com/ChainBoy/any-shell-for-alfred</string>
+	<key>uidata</key>
+	<dict>
+		<key>050FD233-1BAF-4026-A6AB-57442BD71B2C</key>
+		<dict>
+			<key>note</key>
+			<string>Alfred 3 now supports JSON as the Script Filter output. This is the recommended output.</string>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
+		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
+		<dict>
+			<key>note</key>
+			<string>Alfred 3 now supports JSON as the Script Filter output. This is the recommended output.</string>
+			<key>xpos</key>
+			<integer>70</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
+		<key>E93C9EB9-5581-4571-9054-597C8C23D616</key>
+		<dict>
+			<key>xpos</key>
+			<integer>770</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
+		<key>EFD34DC2-0ED3-4CB9-8CCC-A832BFC1F5B4</key>
+		<dict>
+			<key>xpos</key>
+			<integer>280</integer>
+			<key>ypos</key>
+			<integer>80</integer>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/ChainBoy/any-shell-for-alfred</string>
+</dict>
+</plist>
