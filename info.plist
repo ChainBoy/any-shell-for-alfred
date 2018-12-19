@@ -105,10 +105,8 @@
 import sys
 import json
 import subprocess
-FNULL = open(os.devnull, 'w')
 
 cmds = sys.argv[1:]
-#exit()
 if not cmds:
 	exit()
 result_list = []
@@ -167,6 +165,8 @@ import sys
 import json
 import subprocess
 FNULL = open(os.devnull, 'w')
+# change work dir to user home
+os.chdir(os.path.expanduser("~"))
 
 cmds = " ".join(sys.argv[1:]).replace("run:", "").strip()
 #print json.dumps( {"items":[{"uid": 1, "title": "will run: " + cmds},]})
